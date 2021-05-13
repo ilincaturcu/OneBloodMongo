@@ -8,7 +8,8 @@ import org.bson.types.ObjectId;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-import java.sql.Date;
+import java.util.Date;
+
 
 @Getter
 @Setter
@@ -22,9 +23,17 @@ public  class Responses {
     private String cod_donator;
     private Response[] responses;
 
+    public boolean areequals(Object c) {
+        if (c == null)
+            return false;
+
+        if (!Response.class.isAssignableFrom(c.getClass()))
+            return false;
+
+        Response obj = (Response) c;
+
+        Boolean x = this.responses.equals(obj);
+        return x;
+    }
 }
 
-class Response {
-    public Integer question_number;
-    public String response;
-}
