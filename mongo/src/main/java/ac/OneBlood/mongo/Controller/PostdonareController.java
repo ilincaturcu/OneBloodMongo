@@ -18,12 +18,16 @@ public class PostdonareController {
     public ResponseEntity<?> getPostdonareData(){
         return new ResponseEntity<>(postdonareService.listAll(), HttpStatus.OK);
     }
-
+    @GetMapping("/api/postdonare/date/{date}/donor_code/{donor_code}")
+    public ResponseEntity<?> getPostdonareDataByDateAndDonorCode(@PathVariable String date, @PathVariable String donor_code) throws Exception {
+        return new ResponseEntity<>(postdonareService.getByDonorCode(donor_code,date), HttpStatus.OK);
+    }
     @PostMapping("/api/postdonare")
     public ResponseEntity<?> savePostdonareData(@RequestBody Postdonare postdonare) {
         try{postdonareService.getById(postdonare.get_id());}
         catch (Exception e){
             postdonareService.save(postdonare);
+            //add id to Donation Form in SQL
             return new ResponseEntity<>(postdonare.get_id().toString(), HttpStatus.CREATED);
         }
         postdonareService.save(postdonare);

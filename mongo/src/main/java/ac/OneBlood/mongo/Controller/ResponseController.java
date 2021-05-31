@@ -2,6 +2,7 @@ package ac.OneBlood.mongo.Controller;
 
 import ac.OneBlood.mongo.Model.Responses;
 import ac.OneBlood.mongo.Service.ResponseService;
+import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -38,4 +39,17 @@ public class ResponseController {
         responseService.save(responses);
         return new ResponseEntity<>(status, HttpStatus.OK);
     }
+
+
+    @GetMapping("/api/responses/dates/{cod_donator}")
+    public ResponseEntity<?> getResponsesByCodDonator(@PathVariable String cod_donator) {
+       boolean canUserCompleteTheQuiz = responseService.canUserCompleteTheQuizAgain(cod_donator);
+        return new ResponseEntity<>(canUserCompleteTheQuiz, HttpStatus.OK);
+    }
+    @GetMapping("/api/responses/responseId/{cod_donator}")
+    public ResponseEntity<?> getResponseIdByCodDonator(@PathVariable String cod_donator) {
+        ObjectId responseId = responseService.getNewestQuizIdByDonorCode(cod_donator);
+        return new ResponseEntity<>(responseId.toString(), HttpStatus.OK);
+    }
+
 }

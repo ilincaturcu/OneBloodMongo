@@ -7,6 +7,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.TimeZone;
+import java.util.stream.Collectors;
+
 @Service
 @Transactional
 public class PredonareService {
@@ -25,6 +30,22 @@ public class PredonareService {
         if (predonareRepository.findById(id).isPresent())
             return predonareRepository.findById(id).get();
         else throw new Exception();
+    }
+
+
+    public Predonare getByDonorCode(String donor_code, String date) throws Exception {
+        if (predonareRepository.findByCodDonator(donor_code) != null) {
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+            sdf.setTimeZone(TimeZone.getTimeZone("GMT"));
+            System.out.println(date);
+            Predonare i = predonareRepository.findByCodDonator(donor_code).get(0);
+            System.out.println(sdf.format(i.getCompletedAt()));
+
+            return predonareRepository.findByCodDonator(donor_code)
+                    .stream()
+                    .filter(p -> sdf.format(p.getCompletedAt()).equals(date))
+                    .findAny().get();
+        } else throw new Exception();
     }
 
     public void delete(ObjectId id) {

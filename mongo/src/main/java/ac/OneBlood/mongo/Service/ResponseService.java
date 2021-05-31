@@ -3,13 +3,14 @@ package ac.OneBlood.mongo.Service;
 import ac.OneBlood.mongo.Model.Response;
 import ac.OneBlood.mongo.Model.Responses;
 import ac.OneBlood.mongo.Repository.ResponseRepository;
+import org.apache.tomcat.jni.Time;
 import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Arrays;
-import java.util.List;
+import java.sql.Timestamp;
+import java.util.*;
 
 @Service
 @Transactional
@@ -57,6 +58,22 @@ public class ResponseService {
 
         System.out.println(containsAll);
         return containsAll;
+    }
+
+    public Boolean canUserCompleteTheQuizAgain(String donor_code){
+        List<Responses> responses = responseRepository.findResponsesByCodDonator(donor_code);
+//        System.out.println(new Timestamp(System.currentTimeMillis()).getTime());
+//        System.out.println(first.get(0).getCompletedAt().getTime());
+        boolean lastResponseIsOlderThanAWeek = responses.stream().allMatch(r -> new Timestamp(System.currentTimeMillis()).getTime() - r.getCompletedAt().getTime()> 604800 );
+
+        return lastResponseIsOlderThanAWeek;
+    }
+    public ObjectId getNewestQuizIdByDonorCode(String donor_code){
+        List<Responses> responses = responseRepository.findResponsesByCodDonator(donor_code);
+        Responses mostRecent= Collections.max(responses, Comparator.comparing(Responses::getCompletedAt));
+
+        System.out.println(mostRecent);
+        return mostRecent.get_id();
     }
 
 //    public Boolean isUserBlockedTemporarily(Responses response){

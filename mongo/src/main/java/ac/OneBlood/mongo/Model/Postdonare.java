@@ -26,8 +26,8 @@ public class Postdonare {
     private String Rh;
     private String Syphilis;
     private String HIV;
-    private String Antigen_HBs;
-    private String Anticorpi_anti_HTLV;
+    private String HBs;
+    private String HTLV;
     private String ALT;
     private Double Hb;
     private Double Glicemie;
