@@ -54,9 +54,10 @@ public class ResponseService {
         List<Response> first = Arrays.asList(response.getResponses());
         List<Response> second = Arrays.asList(permanent.getResponses());
 
+        first.forEach(x -> System.out.println(x));
         boolean containsAll = first.stream().anyMatch(element -> second.contains(element));
 
-        System.out.println(containsAll);
+        System.out.println("contains all: " + containsAll);
         return containsAll;
     }
 
@@ -72,7 +73,7 @@ public class ResponseService {
         List<Responses> responses = responseRepository.findResponsesByCodDonator(donor_code);
         Responses mostRecent= Collections.max(responses, Comparator.comparing(Responses::getCompletedAt));
 
-        System.out.println(mostRecent);
+       // System.out.println(mostRecent);
         return mostRecent.get_id();
     }
 

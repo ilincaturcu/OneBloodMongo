@@ -20,6 +20,7 @@ public class PredonareController {
 
     @GetMapping("/api/predonare/date/{date}/donor_code/{donor_code}")
     public ResponseEntity<?> getPredonareDataByDateAndDonorCode(@PathVariable String date, @PathVariable String donor_code) throws Exception {
+        System.out.println("linia 23 predonare controller " + date);
         return new ResponseEntity<>(predonareService.getByDonorCode(donor_code,date), HttpStatus.OK);
     }
 

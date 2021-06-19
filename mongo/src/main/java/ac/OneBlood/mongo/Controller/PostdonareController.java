@@ -2,10 +2,13 @@ package ac.OneBlood.mongo.Controller;
 
 import ac.OneBlood.mongo.Model.Postdonare;
 import ac.OneBlood.mongo.Service.PostdonareService;
+import ch.qos.logback.core.pattern.util.RegularEscapeUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.lang.reflect.Field;
 
 
 @RestController
@@ -24,6 +27,7 @@ public class PostdonareController {
     }
     @PostMapping("/api/postdonare")
     public ResponseEntity<?> savePostdonareData(@RequestBody Postdonare postdonare) {
+        System.out.println(postdonare.toString());
         try{postdonareService.getById(postdonare.get_id());}
         catch (Exception e){
             postdonareService.save(postdonare);
@@ -33,4 +37,20 @@ public class PostdonareController {
         postdonareService.save(postdonare);
         return new ResponseEntity<>(postdonare.get_id().toString(), HttpStatus.OK);
     }
+
+    //e case sensitive
+//    @GetMapping("/api/test/{parametru}")
+//    public void test(@RequestBody String tests){
+//        try{
+//            Field field =  Postdonare.class.getDeclaredField(parametru);
+//            System.out.println(field);
+//            Postdonare o = new Postdonare();
+//            field.set(o, "new value");
+//
+//            System.out.println(o.toString());
+//            System.out.println("Parametrul " + parametru + " a fost adaugat in Postdonare");
+//        } catch (NoSuchFieldException | IllegalAccessException e) {
+//            e.printStackTrace();
+//        }
+//    }
 }

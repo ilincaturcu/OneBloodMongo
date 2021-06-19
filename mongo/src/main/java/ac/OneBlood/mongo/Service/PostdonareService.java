@@ -33,10 +33,8 @@ public class PostdonareService {
     public Postdonare getByDonorCode(String donor_code, String date) throws Exception {
         if (postdonareRepository.findByCodDonator(donor_code) != null) {
             SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-            sdf.setTimeZone(TimeZone.getTimeZone("GMT"));
-            System.out.println(date);
-            Postdonare i = postdonareRepository.findByCodDonator(donor_code).get(0);
-            System.out.println(sdf.format(i.getCompletedAt()));
+           // sdf.setTimeZone(TimeZone.getTimeZone("GMT"));
+            System.out.println("data string " + date);
 
             return postdonareRepository.findByCodDonator(donor_code)
                     .stream()

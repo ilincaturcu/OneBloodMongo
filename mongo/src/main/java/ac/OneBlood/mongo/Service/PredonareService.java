@@ -36,10 +36,8 @@ public class PredonareService {
     public Predonare getByDonorCode(String donor_code, String date) throws Exception {
         if (predonareRepository.findByCodDonator(donor_code) != null) {
             SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-            sdf.setTimeZone(TimeZone.getTimeZone("GMT"));
-            System.out.println(date);
-            Predonare i = predonareRepository.findByCodDonator(donor_code).get(0);
-            System.out.println(sdf.format(i.getCompletedAt()));
+        //    sdf.setTimeZone(TimeZone.getTimeZone("GMT"));
+            System.out.println("linia 40 Predonare service" + date);
 
             return predonareRepository.findByCodDonator(donor_code)
                     .stream()
