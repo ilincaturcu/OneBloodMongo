@@ -43,9 +43,10 @@ public class ResponseController {
 
     @GetMapping("/api/responses/dates/{cod_donator}")
     public ResponseEntity<?> getResponsesByCodDonator(@PathVariable String cod_donator) {
-       boolean canUserCompleteTheQuiz = responseService.canUserCompleteTheQuizAgain(cod_donator);
+        boolean canUserCompleteTheQuiz = responseService.canUserCompleteTheQuizAgain(cod_donator);
         return new ResponseEntity<>(canUserCompleteTheQuiz, HttpStatus.OK);
     }
+
     @GetMapping("/api/responses/responseId/{cod_donator}")
     public ResponseEntity<?> getResponseIdByCodDonator(@PathVariable String cod_donator) {
         ObjectId responseId = responseService.getNewestQuizIdByDonorCode(cod_donator);

@@ -15,7 +15,7 @@ public class QuestionController {
     QuestionService questionsService;
 
     @GetMapping("/api/questions")
-    public ResponseEntity<?> getQuestions(){
+    public ResponseEntity<?> getQuestions() {
         return new ResponseEntity<>(questionsService.listAll(), HttpStatus.OK);
     }
 }

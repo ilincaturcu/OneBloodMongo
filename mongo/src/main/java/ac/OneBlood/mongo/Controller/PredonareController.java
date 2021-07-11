@@ -14,24 +14,24 @@ public class PredonareController {
     PredonareService predonareService;
 
     @GetMapping("/api/predonare")
-    public ResponseEntity<?> getPredonareData(){
+    public ResponseEntity<?> getPredonareData() {
         return new ResponseEntity<>(predonareService.listAll(), HttpStatus.OK);
     }
 
     @GetMapping("/api/predonare/date/{date}/donor_code/{donor_code}")
     public ResponseEntity<?> getPredonareDataByDateAndDonorCode(@PathVariable String date, @PathVariable String donor_code) throws Exception {
         System.out.println("linia 23 predonare controller " + date);
-        return new ResponseEntity<>(predonareService.getByDonorCode(donor_code,date), HttpStatus.OK);
+        return new ResponseEntity<>(predonareService.getByDonorCode(donor_code, date), HttpStatus.OK);
     }
 
     @PostMapping("/api/predonare")
     public ResponseEntity<?> savePredonareData(@RequestBody Predonare predonare) {
-        try{predonareService.getById(predonare.get_id());}
-        catch (Exception e){
+        try {
+            predonareService.getById(predonare.get_id());
+        } catch (Exception e) {
             predonareService.save(predonare);
             return new ResponseEntity<>(predonare.get_id().toString(), HttpStatus.CREATED);
         }
-        //add entry in donation form + id for analize pre
         predonareService.save(predonare);
         return new ResponseEntity<>(predonare.get_id().toString(), HttpStatus.OK);
     }
